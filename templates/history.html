@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block main %}
+
+<table class="table table-hover table-bordered table-striped">
+    <tr>
+        <thead>
+            <th scope="col">Name</th>
+            <th scope="col">Symbol</th>
+            <th scope="col">Transaction</th>
+            <th scope="col">Shares</th>
+            <th scope="col">Transaction Price</th>
+            <th scope="col">Date</th>
+        </thead>
+    </tr>
+    <tbody>
+        {% for row in hist %}
+        <tr>
+
+
+            <td>{{ row['name'] }}</td>
+            <td>{{ row['symbol'] }}</td>
+            <td id='type'>{{ row['Type'] }}</td>
+            <td>{{ row['shares'] }}</td>
+            <td>{{ row['tp'] }}</td>
+            <td>{{ row['date'] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+
+
+<script>
+    $(document).ready(function() {
+
+    })
+</script>
+{% endblock %}
+

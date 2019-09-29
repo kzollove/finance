@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    <h3>Register</h3>
+    <form action ="/register" method="post" class="needs-validation" novalidate>
+        <div class="form-group">
+            <input id="usernameInput" autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text" required>
+        </div>
+        <div class="form-group">
+            <input class="form-control" name="password" placeholder="Password" type="password" required>
+        </div>
+        <div class="form-group">
+            <input class="form-control" name="confirmation" placeholder="Confirm Password" type="password" required>
+        </div>
+        <button id="registerBtn" class="btn btn-primary" type="submit">Register</button>
+    </form>
+
+    <script>
+        $(document).ready(function() {
+            $("form").submit(function(event, allowThis){
+                if (allowThis) return;
+                event.preventDefault()
+                $.get("/check?username=" + $("#usernameInput").val(), function(data){
+                    if (data) {
+                        $("input").val('')
+                        alert('Username already in use')
+                    }
+                    else {
+                        $("form").trigger("submit", [true])
+                    }
+                })
+
+            })
+        })
+    </script>
+{% endblock %}
+

@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<h1>Welcome, {{ username }}</h1>
+{% if shares %}
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Stock</th>
+            <th scope="col">Symbol</th>
+            <th scope="col">Shares</th>
+            <th scope="col">Current Price</th>
+            <th scope="col">Total Value</th>
+            <th scope="col">Buy/Sell</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for shares in shares %}
+        <tr>
+            <td>{{ shares['name'] }}</td>
+            <td id="sym">{{ shares['symbol'] }}</td>
+            <td>{{ shares['shares'] }}</td>
+            <td>{{ shares['current'] }}</td>
+            <td>{{ shares['val'] }}</td>
+            <td><input id="buy" type="radio" name="buysell" value="buy">     <input id="sell" type="radio" name="buysell" value="sell"></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="container">
+    <div class="row tall">
+        <div class="col">
+            <h4 class="font-italic">It seems you have no holdings yet.<h4>
+        </div>
+    </div>
+    <div class="row tall">
+        <div class="col">
+            <p><a class="btn btn-secondary" href="{{ url_for('quote') }}">Get a quote</a></p>
+        </div>
+        <div class="col">
+            <p><a class="btn btn-secondary" href="{{ url_for('buy') }}">Buy shares</a></p>
+        </div>
+    </div>
+</diuv>
+{% endif %}
+<form id="buysellform" action="" method="post">
+    <div class="form-group">
+        <input id="buysellInput" class="form-control" autocomplete="off" name="symbol" type="text" value="" readonly="readonly" tabindex="-1">
+        <input id="shares" class="form-control" autofocus autocomplete="off" name="shares" type="text" placeholder="Shares">
+        <button id="subBtn" class="btn btn-primary" type="submit" disabled></button>
+        <input type="button" class="btn btn-secondary" value="-" tabindex="-1">
+    </div>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    //Initially, hide the buy/sell form
+    $(document).ready(function() {
+        $("#buysellform").hide()
+    })
+
+    //Hide form when remove button is clicked
+    $("input[value='-']").click(function() {
+        $("#buysellform").hide()
+    })
+
+    //Begin once a radio button is pressed
+    $("input[name='buysell']").change(function() {
+
+        //Set a variable to string 'buy' or 'sell'
+        var selected =  $("input[name='buysell']:checked").val()
+        if (selected) {
+
+            //Get the symbol of stock that is selected
+            sym = $(this).parent().siblings("#sym").text()
+
+            //Append buy/sell string to action attribute and submit button
+            $("#buysellform").attr("action", "/" + selected)
+            $("#subBtn").html(selected.charAt(0).toUpperCase() + selected.slice(1))
+
+            //Display symbol in disabled input field
+            $("#buysellInput").attr("value", sym)
+
+            //display the form
+            $("#buysellform").show()
+        }
+    })
+</script>
+{% endblock %}

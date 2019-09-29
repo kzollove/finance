@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quote
+{% endblock %}
+
+{% block main %}
+
+<form action="/quote" method="post" class="needs-validation" novalidate>
+    <div class="form-group" id="symform">
+        <input autocomplete="off" autofocus class="form-control" name="symbol" placeholder="Symbol" type="text" minlength="1" required>
+    </div>
+    <div class = "form-group">
+        <button class="btn btn-secondary" id="add" type="button">+</button>
+    </div>
+    <button class="btn btn-primary" type="submit">Get quote</button>
+</form>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+           //Add button adds more symbol input areas
+    $(document).ready(function() {
+        $("#add").click(function() {
+            var lastField = $("#symform div:last");
+            var intId = (lastField && lastField.length && lastField.data("idx") + 1) || 1;
+            var fieldWrapper = $("<div class=\"fieldwrapper\" id=\"field" + intId + "\"/>");
+            fieldWrapper.data("idx", intId);
+            var addSym = $("<input autocomplete=\"off\" autofocus minlength=\"1\" class=\"form-control\" name=\"symbol\" placeholder=\"Symbol\" style=\"padding-left: 10px\"/>")
+            var removeBtn = $("<input type=\"button\" class=\"remove\" value=\"-\" tabindex=\"-1\" />")
+            removeBtn.click(function() {
+                $(this).parent().remove();
+            });
+            fieldWrapper.append(addSym);
+            fieldWrapper.append(removeBtn);
+            $("#symform").append(fieldWrapper);
+        });
+    });
+</script>
+
+{% endblock %}

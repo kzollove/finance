@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sell
+{% endblock %}
+
+{% block main %}
+<form action="/sell" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+    <div class="form-group">
+        <select name="symbol">
+            <option class="form-control" value="" disabled selected>Stocks</option>
+            {% for stock in stocks %}
+            <option class="form-control" value="{{ stock['symbol'] }}">{{ stock['name'] }} (Shares: {{ stock['shares'] }})</option>
+            {% else %}
+            <option class="form-control" value="" disabled>--None Available--</option>
+            {% endfor %}
+        </select>
+        <input id="shares" class="form-control" autocomplete="off" name="shares" type="text" width="20px" placeholder="Shares" required>
+    </div>
+    <div class="form-group">
+        <button id="subBtn" class="btn btn-primary" type="submit" value="select" disabled>Sell</button>
+    </div>
+</form>
+{% endblock %}
