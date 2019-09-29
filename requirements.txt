@@ -5,3 +5,4 @@ passlib
 SQLAlchemy
 cs50
 requests
+psycopg2
