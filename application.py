@@ -1,5 +1,10 @@
 import os
 import sqlalchemy
+import psycopg2
+import urlparse
+import urlparse
+import psycopg2
+
 
 import cs50
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
@@ -59,8 +64,19 @@ class SQL(object):
         except Exception as e:
             raise RuntimeError(e)
 
+#Configure for heroku. db will now be PostgresQL
+urlparse.uses_netloc.append("postgres")
+url = urlparse.urlparse(os.environ["DATABASE_URL"])
+conn = psycopg2.connect(
+ database=url.path[1:],
+ user=url.username,
+ password=url.password,
+ host=url.hostname,
+ port=url.port
+)
+
 # Configure CS50 Library to use SQLite database
-db = SQL("sqlite:///finance.db")
+db = SQL(os.environ["DATABASE_URL"])
 
 # Make sure API key is set
 if not os.environ.get("API_KEY"):
