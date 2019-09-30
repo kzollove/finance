@@ -27,6 +27,7 @@
                 $.get("/check?username=" + $("#usernameInput").val(), function(data){
                     if (data) {
                         $("input").val('')
+                        $("#usernameInput").focus()
                         alert('Username already in use')
                     }
                     else {
