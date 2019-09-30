@@ -1,0 +1,3 @@
+[console_scripts]
+help50 = help50.__main__:main
+
