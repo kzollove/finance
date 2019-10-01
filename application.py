@@ -78,8 +78,6 @@ db = SQL(os.environ["DATABASE_URL"])
 
 # Make sure API key is set
 
-print(os.environ["DATBASE_URL"])
-print(os.environ["API_KEY"])
 if not os.environ["API_KEY"]:
     raise RuntimeError("API_KEY not set")
 
