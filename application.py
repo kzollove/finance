@@ -2,8 +2,6 @@ import os
 import sqlalchemy
 import psycopg2
 import urlparse
-import urlparse
-import psycopg2
 
 
 import cs50
