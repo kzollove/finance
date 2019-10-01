@@ -1,7 +1,7 @@
 import os
 import sqlalchemy
 import psycopg2
-import urlparse
+import urllib.parse
 
 
 import cs50
@@ -63,8 +63,8 @@ class SQL(object):
             raise RuntimeError(e)
 
 #Configure for heroku. db will now be PostgresQL
-urlparse.uses_netloc.append("postgres")
-url = urlparse.urlparse(os.environ["DATABASE_URL"])
+urllib.parse.uses_netloc.append("postgres")
+url = urllib.parse.urlparse(os.environ["DATABASE_URL"])
 conn = psycopg2.connect(
  database=url.path[1:],
  user=url.username,
